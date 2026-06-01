@@ -180,4 +180,5 @@ A prioridade de testes deve ser:
 - importação AIB CSV;
 - regras manuais de categoria;
 - prevenção de duplicidade por hash.
+
 Regras novas de classificação financeira devem ter testes.

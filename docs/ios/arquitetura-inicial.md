@@ -24,7 +24,6 @@ normalizar, interpretar e consultar transações financeiras de forma auditável
 - Swift.
 - SwiftUI.
 - SwiftData.
-- Swift Package Manager.
 - XCTest para testes iniciais e automações de interface quando necessário.
 - Swift Testing poderá ser adotado quando o toolchain do projeto expuser o módulo de forma estável.
 - WatchConnectivity para integração com Apple Watch.
@@ -33,29 +32,28 @@ normalizar, interpretar e consultar transações financeiras de forma auditável
 
 ```text
 personalfinancial-ios
-├── PersonalFinancial.xcodeproj
-├── Apps
-│   ├── PersonalFinancialApp
-│   └── PersonalFinancialWatchApp
-├── Packages
-│   ├── FinancialDomain
-│   ├── FinancialImporting
-│   ├── FinancialPersistence
-│   ├── FinancialReports
-│   ├── FinancialDesign
-│   └── FinancialTesting
+├── PersonalFinancial
+│   ├── App
+│   ├── Dominio
+│   ├── Importacao
+│   ├── Persistencia
+│   ├── Relatorios
+│   ├── Design
+│   └── Watch
 ├── docs
-│   ├── arquitetura
-│   ├── decisoes
-│   └── qualidade
-└── scripts
+└── README.md
 ```
 
-## Camadas
+## Organização Interna
 
-### FinancialDomain
+O projeto deve começar simples, em um único app SwiftUI.
 
-Camada central do sistema. Deve conter as regras financeiras puras.
+Não criaremos pacotes Swift separados no início. Módulos só devem ser extraídos
+quando houver necessidade real de isolamento, reuso ou redução de complexidade.
+
+### Dominio
+
+Área central do sistema. Deve conter as regras financeiras puras.
 
 Responsabilidades:
 
@@ -67,14 +65,14 @@ Responsabilidades:
 - calcular gasto real;
 - validar transações;
 - gerar hashes canônicos;
-- proteger regras de negócio contra detalhes de UI e persistência.
+- proteger regras de negócio contra detalhes de interface e persistência.
 
-Esta camada não pode depender de SwiftUI, SwiftData, CloudKit,
-WatchConnectivity ou APIs de interface.
+O domínio não deve depender de telas. Quando possível, deve permanecer livre de
+detalhes de SwiftUI, SwiftData e WatchConnectivity.
 
-### FinancialImporting
+### Importacao
 
-Camada responsável por transformar arquivos externos em registros canônicos.
+Área responsável por transformar arquivos externos em registros canônicos.
 
 Responsabilidades:
 
@@ -88,9 +86,9 @@ Responsabilidades:
 
 Importadores não devem salvar dados diretamente na persistência.
 
-### FinancialPersistence
+### Persistencia
 
-Camada responsável pelo armazenamento local.
+Área responsável pelo armazenamento local.
 
 Responsabilidades:
 
@@ -101,12 +99,12 @@ Responsabilidades:
 - persistir regras manuais;
 - isolar SwiftData do domínio financeiro.
 
-SwiftData deve permanecer nesta camada para evitar acoplamento entre domínio e
-infraestrutura.
+SwiftData deve ficar concentrado nesta área para evitar acoplamento excessivo
+entre domínio e infraestrutura.
 
-### FinancialReports
+### Relatorios
 
-Camada responsável por montar dados prontos para consumo pelas telas.
+Área responsável por montar dados prontos para consumo pelas telas.
 
 Responsabilidades:
 
@@ -117,9 +115,9 @@ Responsabilidades:
 - detectar padrões financeiros;
 - aplicar filtros de período.
 
-### FinancialDesign
+### Design
 
-Camada responsável pelo design system compartilhado.
+Área responsável pelos componentes visuais compartilhados.
 
 Responsabilidades:
 
@@ -131,9 +129,9 @@ Responsabilidades:
 - criar estados vazios;
 - criar componentes compactos para Apple Watch.
 
-### Apps
+### App
 
-Camada de composição das aplicações.
+Área de composição da aplicação principal.
 
 Responsabilidades:
 
@@ -142,6 +140,13 @@ Responsabilidades:
 - configurar injeção de dependências;
 - configurar permissões;
 - integrar recursos específicos de plataforma.
+
+### Watch
+
+Área destinada às telas e integrações do Apple Watch.
+
+O Apple Watch deve consumir resumos financeiros. Ele não deve executar importação
+de arquivos nem manutenção avançada.
 
 ## Regra Arquitetural Principal
 
