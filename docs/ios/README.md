@@ -15,3 +15,6 @@ Apple-native para macOS, iPhone e Apple Watch.
 - [Padrões do projeto](padroes-do-projeto.md)
 - [Fluxo Git](fluxo-git.md)
 - [Definition of Done](definition-of-done.md)
+- [Modelo de banco de referência](importacao/modelo-banco-referencia.md)
+- [Mapeamento do módulo de importação](importacao/mapeamento-modulo-importacao.md)
+- [Plano de implementação da importação](importacao/plano-implementacao.md)

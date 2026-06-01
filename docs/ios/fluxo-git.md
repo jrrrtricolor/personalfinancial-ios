@@ -62,7 +62,7 @@ Fix:: corrige cálculo de gasto real
 Refactor:: separa normalização de descrição
 Test:: cobre classificação de transferências
 Chore:: configura swift-format
-Build:: adiciona pacote FinancialDomain
+Build:: cria estrutura inicial do app
 ```
 
 ## Mensagens De Commit
