@@ -166,7 +166,13 @@ final class ImportacaoArquivosViewModel: ObservableObject {
     }
 
     private static func urlSchemaPadrao() -> URL {
-        Bundle.main.url(forResource: "BancoDados", withExtension: "sql")
+        #if SWIFT_PACKAGE
+        if let url = Bundle.module.url(forResource: "BancoDados", withExtension: "sql") {
+            return url
+        }
+        #endif
+
+        return Bundle.main.url(forResource: "BancoDados", withExtension: "sql")
             ?? URL(fileURLWithPath: "PersonalFinancial/Persistencia/BancoDados.sql")
     }
 }
