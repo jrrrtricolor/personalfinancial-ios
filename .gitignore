@@ -60,3 +60,11 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Arquivos financeiros reais
+arquivos/entrada/*
+arquivos/importados/*
+arquivos/com_erros/*
+!arquivos/entrada/.gitkeep
+!arquivos/importados/.gitkeep
+!arquivos/com_erros/.gitkeep

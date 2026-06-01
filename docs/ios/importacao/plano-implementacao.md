@@ -20,6 +20,23 @@ PersonalFinancial
 └── Relatorios
 ```
 
+## Diretórios De Arquivos
+
+O fluxo local deve espelhar o repositório de referência:
+
+```text
+arquivos/entrada
+arquivos/importados
+arquivos/com_erros
+```
+
+Regras:
+
+- arquivos financeiros reais não devem ser versionados;
+- arquivos pendentes ficam em `arquivos/entrada`;
+- arquivos importados com sucesso devem ir para `arquivos/importados`;
+- arquivos com erro devem ir para `arquivos/com_erros`.
+
 ## Ordem Recomendada
 
 ### 1. Modelo De Dados

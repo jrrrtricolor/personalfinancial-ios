@@ -15,6 +15,19 @@ Movimentação de dinheiro não significa necessariamente despesa.
 
 A documentação inicial está em [docs/ios](docs/ios/README.md).
 
+## Arquivos De Importação
+
+O fluxo de arquivos segue o repositório de referência:
+
+```text
+arquivos/entrada
+arquivos/importados
+arquivos/com_erros
+```
+
+Arquivos financeiros reais não devem ser versionados. Use `.gitkeep` apenas para
+manter os diretórios no Git.
+
 ## Execução Local
 
 Para testar manualmente no macOS:
