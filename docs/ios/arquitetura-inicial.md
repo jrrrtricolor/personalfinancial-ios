@@ -25,8 +25,8 @@ normalizar, interpretar e consultar transações financeiras de forma auditável
 - SwiftUI.
 - SwiftData.
 - Swift Package Manager.
-- Swift Testing para testes unitários.
-- XCTest para testes de interface quando necessário.
+- XCTest para testes iniciais e automações de interface quando necessário.
+- Swift Testing poderá ser adotado quando o toolchain do projeto expuser o módulo de forma estável.
 - WatchConnectivity para integração com Apple Watch.
 
 ## Estrutura Sugerida
