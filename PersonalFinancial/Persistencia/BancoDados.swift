@@ -6,6 +6,7 @@ enum ErroBancoDados: Error, Equatable {
     case aberturaFalhou(String)
     case schemaNaoEncontrado(URL)
     case execucaoFalhou(String)
+    case conexaoIndisponivel
 }
 
 /// Gerencia a conexão SQLite usada pelo app.
@@ -51,6 +52,28 @@ final class BancoDados {
         try executar(schema)
     }
 
+    /// Obter conexão ativa para operações de persistência.
+    func conexaoAtiva() throws -> OpaquePointer {
+        try abrir()
+
+        guard let conexao else {
+            throw ErroBancoDados.conexaoIndisponivel
+        }
+
+        return conexao
+    }
+
+    /// Executar comandos SQL em lote.
+    func executar(_ sql: String) throws {
+        var erro: UnsafeMutablePointer<CChar>?
+
+        if sqlite3_exec(conexao, sql, nil, nil, &erro) != SQLITE_OK {
+            let mensagem = erro.map { String(cString: $0) } ?? mensagemErro()
+            sqlite3_free(erro)
+            throw ErroBancoDados.execucaoFalhou(mensagem)
+        }
+    }
+
     /// Fechar a conexão aberta com SQLite.
     func fechar() {
         guard let conexaoAberta = conexao else {
@@ -59,17 +82,6 @@ final class BancoDados {
 
         sqlite3_close(conexaoAberta)
         conexao = nil
-    }
-
-    /// Executar comandos SQL em lote.
-    private func executar(_ sql: String) throws {
-        var erro: UnsafeMutablePointer<CChar>?
-
-        if sqlite3_exec(conexao, sql, nil, nil, &erro) != SQLITE_OK {
-            let mensagem = erro.map { String(cString: $0) } ?? mensagemErro()
-            sqlite3_free(erro)
-            throw ErroBancoDados.execucaoFalhou(mensagem)
-        }
     }
 
     /// Obter a última mensagem de erro da conexão.
